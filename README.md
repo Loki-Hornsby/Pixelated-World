@@ -1,4 +1,5 @@
 # Pixelated-World
 Example of a pixelated world.
  
-Assets made by [Meiko](https://github.com/CX7Meiko)
+Previous Assets made by [Meiko](https://github.com/CX7Meiko)
+ - Please check with him before using them.
