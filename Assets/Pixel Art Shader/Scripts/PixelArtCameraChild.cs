@@ -12,9 +12,13 @@ public class PixelArtCameraChild : MonoBehaviour{
     new Camera camera;
     public PixelArtRenderObj RenderObject;
 
-    public void ApplyNewRenderTexture(int x, int y, int z, RenderTextureFormat q){
+    public const int depth = 32;
+    public const RenderTextureFormat format = RenderTextureFormat.ARGB32;
+
+    public void ApplyNewRenderTexture(int v){
         // Create
-        RenderTexture rt = new RenderTexture(x, y, z, q);
+        RenderTexture rt = new RenderTexture(v, v, depth, format);
+        rt.filterMode = FilterMode.Point;
         rt.Create();
 
         // Apply
@@ -25,5 +29,7 @@ public class PixelArtCameraChild : MonoBehaviour{
     void Start(){
         // Setup Camera
         camera = GetComponent<Camera>();
+        camera.allowHDR = false;
+        camera.allowMSAA = false;
     }
 }

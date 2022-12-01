@@ -9,32 +9,73 @@ using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
 public class PixelArtCamera : MonoBehaviour {
-    // General Setup
-    new Camera camera;
-    public PixelArtCameraChild child;
-    public float OffsetDist;
+    // Resolution
+    [Header("Resolution")]
+    public int TargetRes; 
+    int CurrentRes;
 
-    // Constants
-    public const int Res = 128;
-    public const int TexRes = 4096;
-    public const int Depth = 32;
-    public const RenderTextureFormat RTF = RenderTextureFormat.ARGB32;
+    public int TargetTexRes;
+    int CurrentTexRes;
+
+    public const int cap = 2048;
+
+    // Camera
+    [Header("Camera")]
+    public float OffsetDist;
+    public PixelArtCameraChild child;
     public const int OrthSize = 1;
+    new Camera camera;
 
     void Start(){
         // Camera setup
         camera = GetComponent<Camera>();
         camera.orthographic = true;
         camera.orthographicSize = OrthSize;
+        camera.allowHDR = false;
+        camera.allowMSAA = false;
         
         // Position setup
         this.transform.position = new Vector3(0f, -Mathf.Abs(OffsetDist), 0f);
         child.transform.position = new Vector3(0f, 0f, 0f);
+    }
 
-        // Set Screen Res
-        Screen.SetResolution(Res, Res, false);
+    void Update(){
+        // Apply a new resolution
+        if (TargetTexRes != CurrentTexRes){
+            if (TargetTexRes % 2 != 0) Debug.LogError("Tex Res isn't a multiple of 2 and so therefore will scale incorrectly");
 
-        // Create render texture using child
-        child.ApplyNewRenderTexture(TexRes, TexRes, Depth, RTF);
+            child.ApplyNewRenderTexture(TargetTexRes);
+
+            CurrentTexRes = TargetTexRes;
+        }
+
+        // Apply a new screen resolution
+        if (TargetRes != CurrentRes){
+            if (TargetRes % 2 != 0) Debug.LogError("Res isn't a multiple of 2 and so therefore will scale incorrectly");
+
+            // Set Screen Res
+            Screen.SetResolution(TargetRes, TargetRes, false);
+
+            CurrentRes = TargetRes;
+        }
+
+        // Fatal Error
+        if (TargetRes < TargetTexRes){
+            Debug.LogError("Res shouldn't be lower than Target Texture Resolution");
+
+            TargetRes = TargetTexRes;
+        }
+
+        if (TargetRes > cap){
+            Debug.LogError("Res shouldn't be higher than 2048");
+
+            TargetRes = cap;
+        }
+
+        if (TargetTexRes > cap){
+            Debug.LogError("Text Res shouldn't be higher than 2048");
+
+            TargetTexRes = cap;
+        }
     }
 }
