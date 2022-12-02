@@ -147,7 +147,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetRes: 2048
   TargetTexRes: 128
-  OffsetDist: 100
+  zoom: 60
+  offset: 100
   child: {fileID: 857574984714843802}
 --- !u!20 &2112696158
 Camera:

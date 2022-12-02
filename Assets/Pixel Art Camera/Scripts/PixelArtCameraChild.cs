@@ -9,7 +9,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
 public class PixelArtCameraChild : MonoBehaviour{
-    new Camera camera;
+    [System.NonSerialized] public new Camera camera;
     public PixelArtRenderObj RenderObject;
 
     public const int depth = 32;

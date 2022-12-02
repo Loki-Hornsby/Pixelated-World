@@ -21,7 +21,9 @@ public class PixelArtCamera : MonoBehaviour {
 
     // Camera
     [Header("Camera")]
-    public float OffsetDist;
+    [Range(0, 60)]
+    public float zoom;
+    public float offset;
     public PixelArtCameraChild child;
     public const int OrthSize = 1;
     new Camera camera;
@@ -35,11 +37,14 @@ public class PixelArtCamera : MonoBehaviour {
         camera.allowMSAA = false;
         
         // Position setup
-        this.transform.position = new Vector3(0f, -Mathf.Abs(OffsetDist), 0f);
+        this.transform.position = new Vector3(0f, -Mathf.Abs(offset), 0f);
         child.transform.position = new Vector3(0f, 0f, 0f);
     }
 
     void Update(){
+        // Apply Zoom
+        if (child.camera.fieldOfView != zoom) child.camera.fieldOfView = zoom;
+
         // Apply a new resolution
         if (TargetTexRes != CurrentTexRes){
             if (TargetTexRes % 2 != 0) Debug.LogError("Tex Res isn't a multiple of 2 and so therefore will scale incorrectly");
