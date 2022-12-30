@@ -302,5 +302,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a489ec66e658e4f4086272a60e21268a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pixelcam: {fileID: 857574985730127028}
   BaseMat: {fileID: 2100000, guid: e6e95d6b176f8d64e9163c77c41322f7, type: 2}
+  pixelcam: {fileID: 857574985730127028}
