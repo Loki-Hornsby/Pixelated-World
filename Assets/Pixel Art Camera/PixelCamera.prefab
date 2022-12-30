@@ -97,7 +97,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0b32216af1a4aa4184710bb4a48a537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pixelcam: {fileID: 857574985730127028}
   RenderObject: {fileID: 1353895977}
+  TexRes: 2048
 --- !u!1 &857574985730127029
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,11 +147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29c10421fe8f11f4a96fbdcef4e4590d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetRes: 2048
-  TargetTexRes: 128
-  zoom: 60
-  offset: 100
   child: {fileID: 857574984714843802}
+  offset: 100
 --- !u!20 &2112696158
 Camera:
   m_ObjectHideFlags: 0
@@ -221,8 +220,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4781313043119923847}
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 857574985730127026}
@@ -303,4 +302,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a489ec66e658e4f4086272a60e21268a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pixelcam: {fileID: 857574985730127028}
   BaseMat: {fileID: 2100000, guid: e6e95d6b176f8d64e9163c77c41322f7, type: 2}

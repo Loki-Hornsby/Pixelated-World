@@ -12,80 +12,40 @@ using UnityEngine;
 /// This handles the game view - which faces the render texture
 /// </summary>
 
-[RequireComponent(typeof(Camera))]
-public class PixelArtCamera : MonoBehaviour {
-    // Resolution
-    [Header("Resolution")]
-    public int TargetRes; 
-    int CurrentRes;
+namespace Pixel {
+    [RequireComponent(typeof(Camera))]
+    public class PixelArtCamera : MonoBehaviour {
+        [System.NonSerialized] public Camera camera;
 
-    public int TargetTexRes;
-    int CurrentTexRes;
-
-    public const int cap = 2048;
-
-    // Camera
-    [Header("Camera")]
-    [Range(0, 60)]
-    public float zoom;
-    public float offset;
-    public PixelArtCameraChild child;
-    public const int OrthSize = 1;
-    new Camera camera;
-
-    void Start(){
-        // Camera setup
-        camera = GetComponent<Camera>();
-        camera.orthographic = true;
-        camera.orthographicSize = OrthSize;
-        camera.allowHDR = false;
-        camera.allowMSAA = false;
+        [Header("References")]
+        public PixelArtCameraChild child;
         
-        // Position setup
-        this.transform.position = new Vector3(0f, -Mathf.Abs(offset), 0f);
-        child.transform.position = new Vector3(0f, 0f, 0f);
-    }
+        [Header("Configuration")]
+        public float offset;
 
-    void Update(){
-        // Apply Zoom
-        if (child.camera.fieldOfView != zoom) child.camera.fieldOfView = zoom;
+        /// <summary>
+        /// Get the size of the camera in unity
+        /// </summary>
+        public Vector2 GetRealSize(){
+            float height = 2f * camera.orthographicSize;
+            float width = height * camera.aspect;
 
-        // Apply a new resolution
-        if (TargetTexRes != CurrentTexRes){
-            if (TargetTexRes % 2 != 0) Debug.LogError("Tex Res isn't a multiple of 2 and so therefore will scale incorrectly");
-
-            child.ApplyNewRenderTexture(TargetTexRes);
-
-            CurrentTexRes = TargetTexRes;
+            return new Vector2(width, height);
         }
 
-        // Apply a new screen resolution
-        if (TargetRes != CurrentRes){
-            if (TargetRes % 2 != 0) Debug.LogError("Res isn't a multiple of 2 and so therefore will scale incorrectly");
-
-            // Set Screen Res
-            Screen.SetResolution(TargetRes, TargetRes, false);
-
-            CurrentRes = TargetRes;
-        }
-
-        // Fatal Error
-        if (TargetRes < TargetTexRes){
-            Debug.LogError("Res shouldn't be lower than Target Texture Resolution");
-
-            TargetRes = TargetTexRes;
-        }
-
-        if (TargetRes > cap){
-            Debug.LogError("Res shouldn't be higher than 2048");
-
-            TargetRes = cap;
-        }
-
-        if (TargetTexRes > cap){
-            Debug.LogError("Text Res shouldn't be higher than 2048");
-
-            TargetTexRes = cap;
+        /// <summary>
+        /// Setup the pixel camera
+        /// /// </summary>
+        void Awake(){
+            // Camera setup
+            camera = GetComponent<Camera>();
+            camera.orthographic = true;
+            camera.orthographicSize = 0.5f;
+            camera.allowHDR = false;
+            camera.allowMSAA = false;
+            
+            // Position setup
+            this.transform.position = new Vector3(0f, -offset, 0f);
         }
     }
 }
